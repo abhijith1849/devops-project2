@@ -1,0 +1,24 @@
+---
+# tasks file for apache
+- name: installing httpd
+  dnf:
+    name: httpd
+    state: present
+  when:
+    ansible_os_family: RedHat
+    ansible_os_distribution: AlmaLinux
+- name: Enabling ans starting 
+  service:
+    name: apache
+    enabled: yes
+    state: started
+  when:
+    ansible_os_family: RedHat
+    ansible_os_distribution: AlmaLinux
+- name: copy template
+  copy:
+    src: "{{item}}"
+    dest: /var/www/
+  loops:
+    - little.site
+    - spring.site
